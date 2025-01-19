@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Inventory Management System</h1>
+    
+    <!-- Tab Navigation -->
+    <ul class="nav nav-tabs" id="inventoryTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="products-tab" data-bs-toggle="tab" href="#products" role="tab" aria-controls="products" aria-selected="true">Products</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="suppliers-tab" data-bs-toggle="tab" href="#suppliers" role="tab" aria-controls="suppliers" aria-selected="false">Suppliers</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="sale-orders-tab" data-bs-toggle="tab" href="#sale-orders" role="tab" aria-controls="sale-orders" aria-selected="false">Sale Orders</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="stock-movement-tab" data-bs-toggle="tab" href="#stock-movement" role="tab" aria-controls="stock-movement" aria-selected="false">Stock Movement</a>
+        </li>
+    </ul>
+
+    <div class="tab-content mt-4" id="inventoryTabsContent">
+        <!-- Products Tab -->
+        <div class="tab-pane fade show active" id="products" role="tabpanel" aria-labelledby="products-tab">
+            <h2 class="mb-4">Product List</h2>
+            <a href="{% url 'add_product' %}" class="btn btn-primary mb-3">Add Product</a>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Stock Quantity</th>
+                        <th>Supplier</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.description }}</td>
+                        <td>{{ product.price }}</td>
+                        <td>{{ product.stock_quantity }}</td>
+                        <td>{{ product.supplier.name }}</td>
+                        <td>
+                            <a href="/edit-product/{{ product.id }}" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="/delete-product/{{ product.id }}" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Suppliers Tab -->
+        <div class="tab-pane fade" id="suppliers" role="tabpanel" aria-labelledby="suppliers-tab">
+            <h2 class="mb-4">Supplier List</h2>
+            <a href="{% url 'add_supplier' %}" class="btn btn-primary mb-3">Add Supplier</a>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Supplier Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for supplier in suppliers %}
+                    <tr>
+                        <td>{{ supplier.name }}</td>
+                        <td>{{ supplier.email }}</td>
+                        <td>{{ supplier.phone }}</td>
+                        <td>{{ supplier.address }}</td>
+                        <td>
+                            <a href="/edit-supplier/{{ supplier.id }}" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="/delete-supplier/{{ supplier.id }}" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Sale Orders Tab -->
+        <div class="tab-pane fade" id="sale-orders" role="tabpanel" aria-labelledby="sale-orders-tab">
+            <h2 class="mb-4">Sale Order List</h2>
+            <a href="{% url 'create_sale_order' %}" class="btn btn-primary mb-3">Create Sale Order</a>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Total Price</th>
+                        <th>Sale Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in sale_orders %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.product.name }}</td>
+                        <td>{{ order.quantity }}</td>
+                        <td>{{ order.total_price }}</td>
+                        <td>{{ order.sale_date }}</td>
+                        <td>{{ order.get_status_display }}</td>
+                        <td>
+                            <a href="/cancel-sale-order/{{ order.id }}" class="btn btn-danger btn-sm">Cancel</a>
+                            <a href="/complete-sale-order/{{ order.id }}" class="btn btn-success btn-sm">Complete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Stock Movement Tab -->
+        <div class="tab-pane fade" id="stock-movement" role="tabpanel" aria-labelledby="stock-movement-tab">
+            <h2 class="mb-4">Stock Movement</h2>
+            <a href="{% url 'add_stock_movement' %}" class="btn btn-primary mb-3">Add Stock Movement</a>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Movement Type</th>
+                        <th>Quantity</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for movement in stock_movements %}
+                    <tr>
+                        <td>{{ movement.product.name }}</td>
+                        <td>{{ movement.movement_type }}</td>
+                        <td>{{ movement.quantity }}</td>
+                        <td>{{ movement.date }}</td>
+                        <td>
+                            <a href="/edit-stock-movement/{{ movement.id }}" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="/delete-stock-movement/{{ movement.id }}" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

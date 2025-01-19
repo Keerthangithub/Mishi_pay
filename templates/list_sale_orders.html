@@ -1,0 +1,48 @@
+<!-- list_sale_orders.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sale Orders List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Sale Orders</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                    <th>Sale Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in sale_orders %}
+                    <tr>
+                        <td>{{ order.product.name }}</td>
+                        <td>{{ order.quantity }}</td>
+                        <td>{{ order.total_price }}</td>
+                        <td>{{ order.sale_date }}</td>
+                        <td>{{ order.status }}</td>
+                        <td>
+                            {% if order.status == 'Pending' %}
+                                <a href="{% url 'complete_sale_order' order.id %}" class="btn btn-success">Complete</a>
+                                <a href="{% url 'cancel_sale_order' order.id %}" class="btn btn-danger">Cancel</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <br>
+        <a href="{% url 'create_sale_order' %}">Create New Sale Order</a>
+    </div>
+</body>
+</html>
