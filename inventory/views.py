@@ -5,7 +5,6 @@ from .models import Product, Supplier, SaleOrder, StockMovement
 from django.db.models import Sum
 from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator
-from decimal import Decimal
 
 
 def index(request):
@@ -159,7 +158,7 @@ def add_stock_movement(request):
     }
     return render(request, 'add_stock_movement.html', context)
 
-from bson import Decimal128
+
 # Create Sale Order
 def create_sale_order(request):
     if request.method == 'POST':
