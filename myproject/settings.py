@@ -74,27 +74,27 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': BASE_DIR / 'db.sqlite3',
-#    }
-#}
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'djongo',
-        'NAME':'django',
-        'CLIENT': {
-            'host': 'mongodb+srv://admin:123@testproject.z46ij.mongodb.net/', # Replace with your MongoDB server address
-            'port': 27017,               # Replace with your MongoDB port if different
-            'username': 'admin', # Replace with your MongoDB username (optional)
-            'password': '123', # Replace with your MongoDB password (optional)
-             # Replace with your MongoDB authentication database (optional)
-        },
-       
-    }
+   'default': {
+       'ENGINE': 'django.db.backends.sqlite3',
+       'NAME': BASE_DIR / 'db.sqlite3',
+   }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'djongo',
+#         'NAME':'django',
+#         'CLIENT': {
+#             'host': 'mongodb+srv://admin:123@testproject.z46ij.mongodb.net/', # Replace with your MongoDB server address
+#             'port': 27017,               # Replace with your MongoDB port if different
+#             'username': 'admin', # Replace with your MongoDB username (optional)
+#             'password': '123', # Replace with your MongoDB password (optional)
+#              # Replace with your MongoDB authentication database (optional)
+#         },
+       
+#     }
+# }
 
 
 # Password validation
